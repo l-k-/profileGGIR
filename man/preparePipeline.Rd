@@ -4,12 +4,7 @@
 \alias{preparePipeline}
 \title{preparePipeline}
 \usage{
-preparePipeline(
-  workdir = c(),
-  what = "readFileOnly",
-  brand = "Axivity",
-  fileID = 1
-)
+preparePipeline(workdir = c(), what = "readFileOnly", brand = "AX", fileID = 1)
 }
 \arguments{
 \item{workdir}{path to location where code can store test files and results}

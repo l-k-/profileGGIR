@@ -22,7 +22,7 @@ runPipeline = function(workdir = c(), pipelineInfo = c(), fun2profile,
   filename_tmp = paste0(workdir, "/profile_", pipelineInfo$what,
                         "_", pipelineInfo$brand, 
                         "FID", pipelineInfo$fileID,
-                        "_", pipelineInfo$tag,
+                        ifelse(test = pipelineInfo$tag == "", yes = "", no = paste0("_", pipelineInfo$tag)),
                         "_", time)
   profFile = paste0(filename_tmp, ".out")
   resultsFile = paste0(filename_tmp, ".RData")

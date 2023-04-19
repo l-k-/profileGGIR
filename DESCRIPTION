@@ -2,7 +2,7 @@ Package: profileGGIR
 Type: Package
 Title: Profile GGIR Pipelines
 Version: 0.0-1
-Date: 2023-03-03
+Date: 2023-04-19
 Authors@R: c(person("Vincent T","van Hees",role=c("aut","cre"),
                   email="v.vanhees@accelting.com"))
 Maintainer: Vincent T van Hees <v.vanhees@accelting.com>
@@ -10,7 +10,7 @@ Description: Profile GGIR pipelines.
 URL: https://github.com/wadpac/profileGGIR
 License: Apache License version 2.0 | file LICENSE
 Suggests: roxygen2
-Imports: GGIRread
+Imports: GGIRread, GGIR
 Depends: stats, utils, R (>= 3.5.0), grDevices, graphics
 NeedsCompilation: no
 Roxygen: list(markdown = TRUE)

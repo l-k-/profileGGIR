@@ -6,7 +6,7 @@
 #' @param fileID number to indicate which file to read
 #' @return no object is returned
 #' @export
-#' @importFrom utils download.file
+#' @importFrom utils download.file unzip
 
 #'
 preparePipeline = function(workdir = c(), what = "readFileOnly",
@@ -22,11 +22,22 @@ preparePipeline = function(workdir = c(), what = "readFileOnly",
       # AX6 multi day
       url = "https://www.dropbox.com/s/q7rqy8l27djr03v/6011834_0000000050_23-03-2023_leftwrist.cwa?raw=2"
       filename = paste0(workdir, "/6011834_0000000050_23-03-2023_leftwrist.cwa")
+    } else if (fileID == 3) {
+      # UK Biobank example file https://biobank.ctsu.ox.ac.uk/crystal/refer.cgi?id=131620
+      url = "biobank.ctsu.ox.ac.uk/ukb/ukb/examples/accsamp.zip"
+      filename = paste0(workdir, "/ukbbzip.zip")
     }
   }
+
   if (length(filename) > 0) {
     if (!file.exists(filename)) {
       download.file(url = url, destfile = filename)
+    }
+    # Unzip if it is a zip file
+    extension = unlist(strsplit(filename, "[.]"))
+    extension = extension[length(extension)]
+    if (extension == "zip") {
+      filename = unzip(zipfile = filename, exdir = workdir)
     }
   } else {
     warning("no file available, check arguments to function preparePipeline")
@@ -34,6 +45,7 @@ preparePipeline = function(workdir = c(), what = "readFileOnly",
   
   # Prepare call:
   if (what == "readFile" & brand == "AX") {
+    # Only read file in chunks/batches without processing them
     fun2profile = function(filename = c(), verbose = FALSE) {
       k = 1
       previousNR = 0
@@ -54,6 +66,13 @@ preparePipeline = function(workdir = c(), what = "readFileOnly",
         k = k + 1
       }
       if (verbose == TRUE) cat("\n")
+      return()
+    }
+  } else if (what == "GGIRp1" & brand == "AX") {
+    # GGIR part 1 with default arguments
+    fun2profile = function(filename = c(), verbose = FALSE) {
+      GGIR::GGIR(datadir = filename, studyname = "profiling", outputdir = workdir,
+                 overwrite = TRUE, verbose = TRUE)
       return()
     }
   }
