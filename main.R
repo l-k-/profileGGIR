@@ -2,29 +2,29 @@
 # roxygen2::roxygenise()
 
 # TO DO:
-# - add results comparison
-# - warn user about size of file?
+# - use UKBB example file for profiling
 # - document optional pipelines
-# - work out plan for storing multiple instances, e.g. 
-#   - each version in dated folder?
-#   - more info in file name?
-#   - create hash and incorporate this in filename?
-# 
+# - Add example of how to run this via system command line
 
 library(profileGGIR)
 
 # Specify working directory
 workdir = "~/projects"
 
-# Install GGIR (user will have to do this as
-# they want to be in control of the GGIR version)
+# Install GGIR and dependencies (user will have to do this as
+# they want to be in control of this)
 
 # ...
 
 # Define pipeline(s) to run
-pipelines = data.frame(what = "readFileOnly", 
-                       brand = "Axivity",
-                       fileID = 1)
+pipelines = data.frame(what = "readFile",
+                       brand = "AX",
+                       fileID = 1,
+                       tag = "tag1", # tag can be any string
+                       resultsFile = "", # leave empty as this will be overwritten
+                       profFile = "") # leave empty as this will be overwritten
+
+timetag = TRUE # set to FALSE if you do not want a time tage in the filename
 
 for (i in 1:nrow(pipelines)) {
   # Prepare pipeline
@@ -35,15 +35,24 @@ for (i in 1:nrow(pipelines)) {
     fileID =  pipelines$fileID[i]
   )
   # Run and profile pipeline
-  runPipeline(
+  proffiles = runPipeline(
     workdir = workdir,
     pipelineInfo = pipelines[i,],
     fun2profile = out$fun2profile,
     filename = out$filename,
-    verbose = TRUE
+    verbose = TRUE,
+    timetag = timetag
   )
+  pipelines$resultsFile[i] = proffiles$resultsFile
+  pipelines$profFile[i] = proffiles$profFile
   
 }
 
-# Run basic check to compare with previous profiling results for the same pipeline
-# ...
+# It is now up to user to inspect and compare the files, for example:
+library(profvis)
+# Inspect profiling info visually
+profvis(prof_input = pipelines$profFile[1]) # run this line manually
+
+# Check profiling summery
+load(pipelines$resultsFile[1])
+print(results)

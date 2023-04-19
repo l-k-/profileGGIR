@@ -9,7 +9,8 @@ runPipeline(
   pipelineInfo = c(),
   fun2profile,
   filename = c(),
-  verbose = TRUE
+  verbose = TRUE,
+  timetag = TRUE
 )
 }
 \arguments{
@@ -22,9 +23,13 @@ runPipeline(
 \item{filename}{character with path to file to test}
 
 \item{verbose}{verbose}
+
+\item{timetag}{Boolean to indicate whether timestamp should be added to filenames}
 }
 \value{
-no object is returned
+List with filenames of the resultsFile which has the profiling
+summary, sessionInfo and pipeline info and the profFile the object create by
+the Rprof itself
 }
 \description{
 runPipeline

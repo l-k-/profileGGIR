@@ -10,10 +10,10 @@
 
 #'
 preparePipeline = function(workdir = c(), what = "readFileOnly",
-                           brand = "Axivity", fileID = 1) {
+                           brand = "AX", fileID = 1) {
   
   # Download file
-  if (brand == "Axivity") {
+  if (brand == "AX") {
     if (fileID == 1) {
       # AX3 multi day
       url = "https://www.dropbox.com/s/fntsuth4esye9ke/37727_0000000049_13-03-2022_leftwrist.cwa?raw=1"
@@ -33,7 +33,7 @@ preparePipeline = function(workdir = c(), what = "readFileOnly",
   }
   
   # Prepare call:
-  if (what == "readFileOnly" & brand == "Axivity") {
+  if (what == "readFile" & brand == "AX") {
     fun2profile = function(filename = c(), verbose = FALSE) {
       k = 1
       previousNR = 0
