@@ -9,7 +9,7 @@
 #' @importFrom utils download.file unzip
 
 #'
-preparePipeline = function(workdir = c(), what = "readFileOnly",
+preparePipeline = function(workdir = c(), what = "readFile",
                            brand = "AX", fileID = 1) {
   
   # Download file
