@@ -9,7 +9,7 @@
 #' @importFrom utils download.file unzip
 
 #'
-preparePipeline = function(workdir = c(), what = "readFileOnly",
+preparePipeline = function(workdir = c(), what = "readFile",
                            brand = "AX", fileID = 1) {
   
   # Download file
@@ -72,7 +72,7 @@ preparePipeline = function(workdir = c(), what = "readFileOnly",
     # GGIR part 1 with default arguments
     fun2profile = function(filename = c(), verbose = FALSE) {
       GGIR::GGIR(datadir = filename, studyname = "profiling", outputdir = workdir,
-                 overwrite = TRUE, verbose = TRUE)
+                 mode = 1, overwrite = TRUE, verbose = TRUE)
       return()
     }
   }
